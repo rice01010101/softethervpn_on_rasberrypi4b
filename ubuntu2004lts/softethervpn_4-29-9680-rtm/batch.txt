@@ -1,0 +1,8 @@
+Hub DEFAULT
+ServerPasswordSet REPLACE_YOUR_NEW_PASSWORD
+ServerCipherSet AES256-SHA256
+ListenerDisable 992
+ListenerDisable 1194
+ListenerDisable 5555
+OpenVpnEnable no /PORTS:1194
+SstpEnable no
