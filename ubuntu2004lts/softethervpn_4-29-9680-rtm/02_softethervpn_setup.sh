@@ -1,5 +1,11 @@
 #! /bin/bash
 
+# const
+readonly CIDR='REPLACE_YOUR_CIDR' # e.g.192.168.1.0/24
+readonly DNS_IP='REPLACE_YOUR_DNS_IP' # e.g.192.168.1.1
+readonly NATROUTER_IP='REPLACE_YOUR_NATROUTER_IP' # e.g.192.168.1.1
+readonly RASBERRYPI_IP='REPLACE_YOUR_RASBERRYPI_IP' # e.g.192.168.1.10
+
 # 1.necessary package install
 #   virtual bridge tool
 apt-get install -y bridge-utils 
@@ -8,7 +14,7 @@ apt-get install -y build-essential libreadline-dev libssl-dev libncurses-dev lib
 
 # 2.install standard softetherVPN
 #   setup virtual bridge
-echo -e "network:\n    ethernets:\n        eth0:\n            dhcp4: false\n            dhcp6: false\n    bridges:\n        br0:\n            interfaces: [eth0]\n            dhcp4: false\n            dhcp6: false\n            addresses: [REPLACE_YOUR_RASBERRYPI_IP]\n            gateway4: REPLACE_YOUR_NATROUTER_IP\n            nameservers:\n                addresses: [REPLACE_YOUR_DNS_IP]\n    renderer: networkd\n    version: 2" > /etc/netplan/99-user-init.yaml
+echo -e "network:\n    ethernets:\n        eth0:\n            dhcp4: false\n            dhcp6: false\n    bridges:\n        br0:\n            interfaces: [eth0]\n            dhcp4: false\n            dhcp6: false\n            addresses: [${RASBERRYPI_IP}]\n            gateway4: ${NATROUTER_IP}\n            nameservers:\n                addresses: [${DNS_IP}]\n    renderer: networkd\n    version: 2" > /etc/netplan/99-user-init.yaml
 #   install softetherVPN
 wget https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/archive/v4.29-9680-rtm.zip
 cd SoftEtherVPN_Stable-4.29-9680-rtm
@@ -22,7 +28,7 @@ echo -e "[Unit]\nDescription=SoftEther VPN Server\nAfter=network.target network-
 systemctl start vpnserver
 systemctl enable vpnserver
 # allow vpnserver manager access only private network
-echo -e "127.0.0.1\nREPLACE_YOUR_CIDR" | sudo tee /usr/vpnserver/adminip.txt
+echo -e "127.0.0.1\n${CIDR}" | sudo tee /usr/vpnserver/adminip.txt
 
 cd ../
 

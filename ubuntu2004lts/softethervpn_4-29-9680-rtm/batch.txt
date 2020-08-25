@@ -10,3 +10,4 @@ HubCreate VHUB-1 /PASSWORD:REPLACE_YOUR_HUB_PASSWORD
 Hub VHUB-1
 UserCreate testuser /GROUP:none /REALNAME:none /NOTE:none
 UserPasswordSet testuser /PASSWORD:password
+exit
