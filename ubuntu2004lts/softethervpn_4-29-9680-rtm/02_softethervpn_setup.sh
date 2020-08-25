@@ -28,3 +28,6 @@ cd ../
 
 # 3.softetherVPN configuration.
 /usr/bin/vpncmd /server localhost /in:batch.txt
+sed -i -e "9 s/#//" /etc/systemd/system/vpnserver.service
+systemctl daemon-reload
+systemctl restart vpnserver

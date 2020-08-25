@@ -1,8 +1,12 @@
-Hub DEFAULT
-ServerPasswordSet REPLACE_YOUR_NEW_PASSWORD
+ServerPasswordSet REPLACE_YOUR_SERVER_PASSWORD
 ServerCipherSet AES256-SHA256
 ListenerDisable 992
 ListenerDisable 1194
 ListenerDisable 5555
 OpenVpnEnable no /PORTS:1194
 SstpEnable no
+HubCreate VHUB-1 /PASSWORD:REPLACE_YOUR_HUB_PASSWORD
+
+Hub VHUB-1
+UserCreate testuser /GROUP:none /REALNAME:none /NOTE:none
+UserPasswordSet testuser /PASSWORD:password
